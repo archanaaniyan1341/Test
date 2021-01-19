@@ -7,8 +7,8 @@ public class MapScanner{
         public static void main(String[] args) throws IOException{
         
                 HashMap studentRecord = new HashMap();
-                Integer id;
                 String name;
+                String time;
                 Scanner keyboard = new Scanner(System.in);
                 System.out.print("Enter the filename to read from: ");
                 String filename = keyboard.nextLine();
@@ -18,9 +18,13 @@ public class MapScanner{
                 
                 while (inputFile.hasNext())
                 {
-                        id = Integer.parseInt(inputFile.next());
-                        name = inputFile.nextLine();
-                        studentRecord.put(id, name);
+                        String line=inputFile.nextLine();
+                       if(line.contains("INSERT")) {
+                    	   String words[]=line.trim().split(" ");
+                    	   name=words[5].replace(',', ' ');
+                    	   time=words[1];
+                    	   studentRecord.put(name, time);
+                       }
                 }
                 
                 inputFile.close();
@@ -28,23 +32,14 @@ public class MapScanner{
                 System.out.println(studentRecord.keySet());
                 
                 System.out.print("Enter key: ");
-                id = keyboard.nextInt();
-                if (studentRecord.containsKey(id)){
-                        name = (String) studentRecord.get(id);
-                        System.out.println(id + "\t" + name  + "  found");
+                name = keyboard.next();
+                if (studentRecord.containsKey(name)){
+                       time = (String) studentRecord.get(name);
+                        System.out.println(name + "\t" + time  + "  found");
                 }
                 else
-                        System.out.println(id + " not found");
+                        System.out.println(name+ " not found");
         }         
 
 }
-/*23450 Jack
-10398 Amar
-10009 Boris
-51430 Amy
-69087 Brenda
-68700 Zirui
-67568 Xu
-22222 Nick
-17171 Chandra
-10245 James*/
+
